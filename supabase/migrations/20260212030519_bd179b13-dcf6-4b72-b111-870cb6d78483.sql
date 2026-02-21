@@ -1,0 +1,1 @@
+ALTER TABLE public.patients ADD COLUMN current_address text;

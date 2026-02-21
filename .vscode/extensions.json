@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next",
+    "chrisdias.vscode-open-in-browser",
+    "Vue.volar",
+    "firsttris.vscode-jest-runner",
+    "vitest.explorer",
+    "supabase.supabase-vscode",
+    "GitHub.copilot",
+    "GitHub.copilot-chat"
+  ]
+}

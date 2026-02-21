@@ -1,0 +1,1 @@
+ALTER TABLE public.services ADD COLUMN duration_minutes integer NULL DEFAULT NULL;
