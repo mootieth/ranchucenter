@@ -151,19 +151,24 @@ const MyProfile = () => {
 
     setIsSaving(true);
     try {
-      let avatarUrl = photoPreview;
+      let avatarUrl = profile?.avatar_url || null;
 
+      // Upload avatar if photo file is selected
       if (photoFile) {
         const fileExt = photoFile.name.split(".").pop();
         const filePath = `${user.id}/avatar.${fileExt}`;
-        const { error: uploadError } = await supabase.storage
+        const { data: uploadData, error: uploadError } = await supabase.storage
           .from("staff-photos")
           .upload(filePath, photoFile, { upsert: true });
 
-        if (!uploadError) {
-          const { data: publicUrl } = supabase.storage.from("staff-photos").getPublicUrl(filePath);
-          avatarUrl = `${publicUrl.publicUrl}?t=${Date.now()}`;
+        if (uploadError) {
+          console.error("Avatar upload error:", uploadError);
+          throw new Error(`อัปโหลดรูปภาพล้มเหลว: ${uploadError.message}`);
         }
+
+        // Get public URL only if upload succeeded
+        const { data: publicUrl } = supabase.storage.from("staff-photos").getPublicUrl(filePath);
+        avatarUrl = `${publicUrl.publicUrl}?t=${Date.now()}`;
       }
 
       const { error } = await supabase
@@ -176,7 +181,7 @@ const MyProfile = () => {
           license_number: form.license_number || null,
           id_card: form.id_card || null,
           date_of_birth: form.date_of_birth || null,
-          avatar_url: avatarUrl || null,
+          avatar_url: avatarUrl,
           house_number: form.house_number || null,
           moo: form.moo || null,
           street: form.street || null,
