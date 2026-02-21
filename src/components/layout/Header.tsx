@@ -56,10 +56,17 @@ const Header = ({ title, sidebarOpen, onToggleSidebar }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 md:px-6 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="icon" onClick={onToggleSidebar} className="shrink-0">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onToggleSidebar}
+          className="shrink-0"
+        >
           <Menu className="w-5 h-5" />
         </Button>
-        <h1 className="text-lg md:text-xl font-semibold text-foreground truncate">{title}</h1>
+        <h1 className="text-lg md:text-xl font-semibold text-foreground truncate">
+          {title}
+        </h1>
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
@@ -82,20 +89,26 @@ const Header = ({ title, sidebarOpen, onToggleSidebar }: HeaderProps) => {
         {/* User Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2 px-2">
-              <Avatar className="w-8 h-8">
-                <AvatarImage src={profile?.avatar_url || ""} />
-                <AvatarFallback className="bg-primary text-primary-foreground text-sm">
+            <Button
+              variant="ghost"
+              className="flex items-center gap-2 px-2 hover:bg-accent/50"
+            >
+              <Avatar className="w-10 h-10 border-2 border-primary/20">
+                <AvatarImage
+                  src={profile?.avatar_url || ""}
+                  alt={profile?.full_name}
+                />
+                <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
                   {profile?.full_name ? getInitials(profile.full_name) : "?"}
                 </AvatarFallback>
               </Avatar>
-              <div className="hidden md:block text-left">
-                <p className="text-sm font-medium">{profile?.full_name || "ผู้ใช้"}</p>
-                <div className="flex items-center gap-1">
-                  <Badge variant="secondary" className={`text-xs px-1.5 py-0 ${roleColors[primaryRole]}`}>
-                    {roleLabels[primaryRole] || primaryRole}
-                  </Badge>
-                </div>
+              <div className="text-left hidden sm:block">
+                <p className="text-sm font-medium leading-tight">
+                  {profile?.full_name || "ผู้ใช้"}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {roleLabels[primaryRole] || primaryRole}
+                </p>
               </div>
             </Button>
           </DropdownMenuTrigger>
@@ -125,7 +138,10 @@ const Header = ({ title, sidebarOpen, onToggleSidebar }: HeaderProps) => {
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive">
+            <DropdownMenuItem
+              onClick={handleSignOut}
+              className="text-destructive focus:text-destructive"
+            >
               <LogOut className="w-4 h-4 mr-2" />
               ออกจากระบบ
             </DropdownMenuItem>
